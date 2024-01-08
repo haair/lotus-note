@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="../../../static/css/user/auth/styles.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/user/auth/styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>Lotus Notes</h1>
+            <p>free online notepad</p>
+            <img src="../../../static/splash.jpg" alt="">
+
+        </div>
+        <form class="right" method="post" action="/login">
+            <input class="right-login-item" type="text" placeholder="Username" name="username" required>
+            <input class="right-login-item" type="password" placeholder="Password" name="password" required>
+            <button class="right-login-item" type="submit">Log in</button><div th:if="${param.error}" class="alert alert-danger">
+                Invalid username and password
+            </div>
+            <div th:if="${unsuccess}" class="alert-unsuccess">
+                Username or password not correct
+            </div>
+            <a class="right-login-item" href="#">Forgotten password?</a>
+            <button class="right-login-item">Create new account</button>
+        </form>
+    </div>
+</body>
+
+</html>
