@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link rel="stylesheet" type="text/css" href="../../../static/css/user/home/styles.css">-->
-    <link rel="stylesheet" type="text/css" href="css/user/home/styles.css">
+<!--   <link rel="stylesheet" type="text/css" href="../../../static/css/user/home/styles.css">-->
+     <link rel="stylesheet" type="text/css" href="css/user/home/styles.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Document</title>
 </head>
@@ -39,6 +39,16 @@
                   </svg>
                 ABOUT LOTUS NOTES</button>
         </div>
+        <script type="text/javascript">
+            function clearSearch() {
+                window.location = "[[@{/}]]";
+            }
+        </script>
+        <form th:action="@{/search}">
+            <input type="text" name="keyword" placeholder="Search" th:value="${keyword}">
+            <input type="submit" value="Search" class="btn-search">
+            <input type="button" value="Clear" class="btn-search" onclick="clearSearch()"/>
+        </form>
         <div class="list-note">
             <div class="list-note-item" th:each="item : ${noteList}">
                 <div class="item-text">
@@ -63,31 +73,6 @@
                         </a></button>
                 </div>
             </div>
-
-<!--            <div class="list-note-item">-->
-<!--                <div class="item-text">-->
-<!--                    <p class="title">Note title</p>-->
-<!--                    <p>ldqwdw</p>-->
-<!--                </div>-->
-<!--                <div class="item-time">09/01/2024</div>-->
-<!--                <div class="item-btn">-->
-<!--                    <button><a href="#"></a>Edit</button>-->
-<!--                    <button><a href="#"></a>Remove</button>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="list-note-item">-->
-<!--                <div class="item-text">-->
-<!--                    <p class="title">Note title</p>-->
-<!--                    <p>ldqwdw</p>-->
-<!--                </div>-->
-<!--                <div class="item-time">09/01/2024</div>-->
-<!--                <div class="item-btn">-->
-<!--                    <button><a href="#"></a>Edit</button>-->
-<!--                    <button><a href="/note/delete/${item.noteID}">Delete</a></button>-->
-<!--                </div>-->
-<!--            </div>-->
-        
         </div>
     </div>
 </body>

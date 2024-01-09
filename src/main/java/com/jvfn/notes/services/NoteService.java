@@ -19,7 +19,6 @@ public class NoteService implements NoteDAO {
     public Note getNoteById(int noteID) {
         String SQL = "SELECT * FROM Note WHERE noteID = " + noteID;
         List<Note> note = jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Note.class));
-        System.out.println(note.getFirst().getContent());
         return note.getFirst();
     }
 
@@ -31,6 +30,12 @@ public class NoteService implements NoteDAO {
     @Override
     public List<Note> getNoteByUsername(String username) {
         String SQL = "SELECT noteID, u.userID, title, content, createdAt, lastModifiedAt FROM Note n INNER JOIN [User] u ON n.userID = u.userID WHERE u.username = '" + username + "' ORDER BY createdAt DESC";
+        return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Note.class));
+    }
+
+    @Override
+    public List<Note> findByTitle(String title, int userID) {
+        String SQL = "SELECT * FROM Note WHERE title LIKE '%" + title + "%' AND userID = " + userID;
         return jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(Note.class));
     }
 

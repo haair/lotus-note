@@ -10,6 +10,7 @@ public interface NoteDAO {
     Note getNoteById(int noteID);
     List<Note> getAllNote();
     List<Note> getNoteByUsername(String username);
+    List<Note> findByTitle(String title, int userID);
     void deleteNote(int noteID);
     void updateNote(Note note);
     void createNote(Note note);

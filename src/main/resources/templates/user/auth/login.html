@@ -10,26 +10,29 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="left">
-            <h1>Lotus Notes</h1>
-            <p>free online notepad</p>
-            <img src="../../../static/splash.jpg" alt="">
+<div class="container">
+    <div class="left">
+        <h1>Lotus Notes</h1>
+        <p>free online notepad</p>
+        <!-- <img src="splash.jpg" alt=""> -->
 
-        </div>
-        <form class="right" method="post" action="/login">
-            <input class="right-login-item" type="text" placeholder="Username" name="username" required>
-            <input class="right-login-item" type="password" placeholder="Password" name="password" required>
-            <button class="right-login-item" type="submit">Log in</button><div th:if="${param.error}" class="alert alert-danger">
-                Invalid username and password
-            </div>
-            <div th:if="${unsuccess}" class="alert-unsuccess">
-                Username or password not correct
-            </div>
-            <a class="right-login-item" href="#">Forgotten password?</a>
-            <button class="right-login-item">Create new account</button>
-        </form>
     </div>
+    <form class="right" method="post" action="/login">
+        <input class="right-login-item" type="text" placeholder="Username" name="username" required
+               th:value="${username}">
+        <input class="right-login-item" type="password" placeholder="Password" name="password" required
+               th:value="${password}">
+        <button class="right-login-item" type="submit">Log in</button>
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username and password
+        </div>
+        <div th:if="${unsuccess}" class="alert-unsuccess">
+            Username or password not correct
+        </div>
+        <a class="right-login-item" href="#">Forgotten password?</a>
+        <button class="right-login-item">Create new account</button>
+    </form>
+</div>
 </body>
 
 </html>

@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration: none;
 }
 
 .container {
@@ -51,8 +52,9 @@ button:hover {
 }
 
 .styled-table {
+    margin: auto;
+    margin-top: 20px;
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
@@ -133,4 +135,18 @@ body {
 
 .form-group input[type="submit"]:hover {
     background-color: #45a049;
+}
+
+.lout-out {
+    margin: auto;
+}
+
+.log-out a {
+    color: white;
+}
+
+.btn-container {
+    width: fit-content;
+    margin: auto;
+    margin-top: 10px;
 }

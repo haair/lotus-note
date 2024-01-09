@@ -24,37 +24,24 @@ public class AuthController {
     @Autowired
     private NoteDAO noteDAO;
 
-    @PostMapping("/register")
-    public String handleRegistration(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            @RequestParam("fullname") String fullName,
-            @RequestParam("email") String email,
-            Model model) {
-
-        MailUser mailUser = new MailUser(-1, username, password, fullName, email);
-//        mailUserDAO.createUser(mailUser);
-        model.addAttribute("user", mailUser);
-
-        return "info";
-    }
-
-    @PostMapping("/register1")
-    public String handleRegistration(@ModelAttribute("user") MailUser registration, Model model) {
-        model.addAttribute("user", registration);
-        return "info";
-    }
 
     @GetMapping("/form_info")
     public String formInfo(Model model) {
         List<User> users = userDAO.getAllUser();
-        users.forEach(System.out :: println);
+        users.forEach(System.out::println);
         model.addAttribute("customers", users);
         return "user/form_info";
     }
 
     @GetMapping("/")
     public String home(HttpSession httpSession, Model model) {
+        if (httpSession.getAttribute("role") != null) {
+            int role = (int) httpSession.getAttribute("role");
+            if (role == 0) {
+                model.addAttribute("customers", userDAO.getAllUser());
+                return "admin/user/view_user";
+            }
+        }
         String username = (String) httpSession.getAttribute("username");
         if (username != null) {
             model.addAttribute("username", username);
@@ -77,10 +64,16 @@ public class AuthController {
             httpSession.setAttribute("userID", user.getUserID());
             httpSession.setAttribute("username", username);
             httpSession.setAttribute("password", password);
+            httpSession.setAttribute("role", user.getRole());
             model.addAttribute("username", username);
+            if (user.getRole() == 0) {
+
+            }
             return "redirect:/";
         }
         model.addAttribute("unsuccess", true);
+        model.addAttribute("username", username);
+        model.addAttribute("password", password);
         return "user/auth/login";
     }
 
@@ -89,6 +82,7 @@ public class AuthController {
         httpSession.removeAttribute("userID");
         httpSession.removeAttribute("username");
         httpSession.removeAttribute("password");
+        httpSession.removeAttribute("role");
         return "redirect:/";
     }
 
@@ -108,12 +102,11 @@ public class AuthController {
         System.out.println(new_pass + "|" + re_new_pass);
         if (curr_pass.equals(httpSession.getAttribute("password"))) {
             if (new_pass.equals(re_new_pass)) {
-                User user = new User((int)httpSession.getAttribute("userID"), (String)httpSession.getAttribute("username"), new_pass, -1);
+                User user = new User((int) httpSession.getAttribute("userID"), (String) httpSession.getAttribute("username"), new_pass, -1);
                 userDAO.updateUser(user);
                 model.addAttribute("STATUS", "Change password successful");
                 httpSession.setAttribute("password", new_pass);
-            }
-            else {
+            } else {
                 model.addAttribute("STATUS", "Retype new password not correct!");
             }
         } else {
@@ -121,7 +114,6 @@ public class AuthController {
         }
         return "user/auth/change_password";
     }
-
 
 
     @GetMapping("/form")

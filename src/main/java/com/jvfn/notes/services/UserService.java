@@ -16,7 +16,7 @@ public class UserService implements UserDAO {
     private final String SQL_GET_ALL = "SELECT * FROM [User]";
     @Override
     public User getUserById(int userID) {
-        String SQL = "SELECT * FROM User WHERE userID = " + userID;
+        String SQL = "SELECT * FROM [User] WHERE userID = " + userID;
         return (User) jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(User.class));
     }
 
@@ -28,7 +28,6 @@ public class UserService implements UserDAO {
     @Override
     public User isExistUser(String username, String password) {
         String SQL = "SELECT * FROM [User] WHERE username = '" + username + "' AND password = '" + password + "'";
-        System.out.println(SQL);
         List<User> users = jdbcTemplate.query(SQL, BeanPropertyRowMapper.newInstance(User.class));
         if (users.size() > 0)
             return users.getFirst();
@@ -42,7 +41,14 @@ public class UserService implements UserDAO {
 
     @Override
     public void deleteUser(int userID) {
-
+        try {
+            String SQL = "DELETE FROM [User] WHERE userID = ?";
+            jdbcTemplate.update(SQL, userID);
+            System.out.println("Del ok!");
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -53,6 +59,8 @@ public class UserService implements UserDAO {
 
     @Override
     public void createUser(User user) {
-
+        String SQL = "INSERT INTO [User] (username, password, role) VALUES (?, ?, ?)";
+        jdbcTemplate.update(SQL, user.getUsername(), user.getPassword(), user.getRole());
+        System.out.println("add user ok!");
     }
 }
